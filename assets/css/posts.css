@@ -1,0 +1,493 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+    background-color: #f4f7f6;
+    direction: rtl;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header .header-profile-img {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+}
+
+/* ========== LAYOUT CONTAINER ========== */
+.posts-page-main {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.posts-hero {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.posts-hero h1 {
+    color: #0d4d44 !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 8px !important;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+}
+
+.posts-hero p {
+    color: #666;
+    font-size: 1.05rem;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+}
+
+/* ========== SEARCH & FILTER INTERFACE ========== */
+.search-filter-container {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid #eef2f1;
+}
+
+.search-box-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #0d4d44;
+    font-size: 1.1rem;
+}
+
+#posts-search {
+    width: 100%;
+    padding: 14px 48px 14px 20px;
+    border: 2px solid #dde3e2;
+    border-radius: 30px;
+    font-size: 1rem;
+    outline: none;
+    font-family: inherit;
+    background: #fafcfc;
+    transition: all 0.25s ease;
+}
+
+#posts-search:focus {
+    border-color: #0d4d44;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(13, 77, 68, 0.06);
+}
+
+.filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.filter-pills .pill {
+    background: #f0f4f3;
+    border: 2px solid transparent;
+    color: #0d4d44;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.filter-pills .pill:hover {
+    background: #e1eae8;
+}
+
+.filter-pills .pill.active {
+    background: #0d4d44;
+    color: white;
+    box-shadow: 0 4px 12px rgba(13, 77, 68, 0.2);
+}
+
+/* ========== POSTS GRID & CARDS ========== */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    width: 100%;
+}
+
+.item-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 4px solid #0d4d44;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* הפיכת מיכל התמונה ללחיצה עם חיווי זכוכית מגדלת מודרני */
+.item-img-container {
+    width: 100%;
+    height: 220px;
+    background-color: #eee;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+.item-img-container::after {
+    content: "🔍 לחצו להגדלה";
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(13, 77, 68, 0.85);
+    color: white;
+    padding: 5px 12px;
+    font-size: 0.75rem;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-weight: 600;
+}
+
+.item-img-container:hover::after {
+    opacity: 1;
+}
+
+.item-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.item-img-container:hover img {
+    transform: scale(1.03);
+}
+
+.item-card-content {
+    padding: 20px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.item-card h3.post-card-title {
+    margin: 0;
+    font-size: 1.35rem;
+    color: #0d4d44;
+    font-weight: 700;
+}
+
+.post-card-address {
+    color: #777;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
+/* מיכל שורות המידע והתגים של הפוסט */
+.post-specs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 6px 0;
+    background: #fbfdfc;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ebf2f0;
+}
+
+.post-spec-row {
+    font-size: 0.88rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.post-spec-row span {
+    color: #0d4d44;
+    font-weight: 600;
+}
+
+.post-spec-row strong {
+    color: #222;
+}
+
+/* כותרות קטנות מעוצבות עבור קטעי הטקסט */
+.small-spec-heading {
+    font-size: 0.88rem;
+    color: #0d4d44;
+    font-weight: 700;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    text-align: right;
+}
+
+/* הגדרת חיתוך ל-3 שורות מדויקות עבור תיאור המפרסם */
+.item-card .item-desc {
+    color: #666;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* הגדרת חיתוך ל-2 שורות מדויקות עבור פידבק המערכת */
+.ai-feedback-text {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    background: #fdfdfd;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border-right: 3px solid #1ebd7f;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ביטול החיתוך לחלוטין ברגע שלוחצים על כפתור ההרחבה */
+.item-card .item-desc.expanded,
+.ai-feedback-text.expanded {
+    display: block !important;
+    line-clamp: unset !important;
+    -webkit-line-clamp: unset !important;
+    overflow: visible !important;
+}
+
+/* לחצן הרחבה אלגנטי ונקי */
+.read-more-btn {
+    background: none;
+    border: none;
+    color: #0d4d44;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0;
+    margin: 4px 0 8px 0;
+    text-align: right;
+    font-size: 0.84rem;
+    display: block;
+    width: fit-content;
+    transition: color 0.2s ease;
+}
+
+.read-more-btn:hover {
+    color: #1ebd7f;
+    text-decoration: underline;
+}
+
+/* בלוק פידבק מערכת (AI) בשורה חדשה לגמרי */
+.ai-feedback-block {
+    margin-top: 8px;
+    border-top: 1px dashed #dde3e2;
+    padding-top: 6px;
+    width: 100%;
+}
+
+.post-card-distance {
+    color: #d63031;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin: 0;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.btn-primary-feed {
+    width: calc(100% - 40px);
+    margin: 0 20px 20px 20px;
+    background: #0d4d44;
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.15s ease;
+    font-family: inherit;
+}
+
+.btn-primary-feed:hover {
+    background: #1ebd7f !important;
+    transform: scale(1.01);
+}
+
+/* ========== שדרוג: עיצוב חלונית הפופ-אפ (Custom Modal Overlay) ========== */
+.image-custom-modal {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(5px);
+    /* אפקט טשטוש יוקרתי מאחורי התמונה */
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-popup-img {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 82vh;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    animation: zoomInPopup 0.25s cubic-bezier(0.1, 0.8, 0.25, 1);
+    object-fit: contain;
+    /* שומר על התמונה בשלמותה ללא עיוותים */
+}
+
+@keyframes zoomInPopup {
+    from {
+        transform: scale(0.88);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 25px;
+    right: 40px;
+    color: #ffffff;
+    font-size: 45px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+    user-select: none;
+}
+
+.close-modal-btn:hover {
+    color: #1ebd7f;
+}
+
+/* ========== STATUS & EMPTY STATE ========== */
+#posts-status-area {
+    width: 100%;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.posts-loader {
+    font-size: 1.2rem;
+    color: #0d4d44;
+    font-weight: 600;
+}
+
+.posts-loader i {
+    margin-left: 8px;
+}
+
+.no-results {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.no-results h3 {
+    color: #0d4d44;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.no-results p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* ========== FOOTER SETTINGS ========== */
+footer {
+    background: white;
+    color: #0d4d44;
+    padding: 40px 5%;
+    text-align: center;
+    border-top: 1px solid #eee;
+    width: 100%;
+    margin-top: auto;
+}
+
+footer .footer-links {
+    margin-bottom: 10px;
+}
+
+footer a {
+    color: #0d4d44 !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease;
+    margin: 0 10px;
+    font-weight: 600;
+}
+
+footer a:hover {
+    color: #1ebd7f !important;
+}
+
+@media (max-width: 480px) {
+    .posts-page-main {
+        padding: 20px 10px;
+    }
+
+    .search-filter-container {
+        padding: 15px;
+    }
+
+    .posts-hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .close-modal-btn {
+        top: 15px;
+        right: 25px;
+        font-size: 38px;
+    }
+}

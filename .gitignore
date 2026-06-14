@@ -1,0 +1,15 @@
+# Dependency directories
+/vendor/
+
+# User uploads (keep directory but ignore files)
+/uploads/*
+!/uploads/.gitkeep
+
+# IDE configuration folders
+.vscode/
+.idea/
+
+# OS metadata files
+Thumbs.db
+Desktop.ini
+.DS_Store

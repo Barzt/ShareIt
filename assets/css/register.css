@@ -1,0 +1,155 @@
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 5%;
+    background-color: #0d4d44; 
+    min-height: 80vh;
+}
+
+.auth-container {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border-top: 10px solid #d63031; 
+    text-align: center;
+}
+
+.auth-container h1 {
+    color: #0d4d44;
+    margin-bottom: 5px;
+    font-size: 2.2rem;
+}
+
+.auth-subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.input-wrapper { flex: 1; position: relative; }
+
+.form-group { 
+    margin-bottom: 25px; 
+    text-align: right;
+    position: relative;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #0d4d44;
+    box-shadow: 0 0 5px rgba(13, 77, 68, 0.2);
+}
+
+input[type="tel"] {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.error-bubble {
+    display: none;
+    position: absolute;
+    top: 105%;
+    right: 10px;
+    background: #ffebeb;
+    color: #d63031;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    white-space: nowrap;
+}
+
+.error-bubble.show { display: block; animation: fadeIn 0.3s ease; }
+.error-bubble.valid { background: #eefdf5; color: #27ae60; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* העין של הסיסמה */
+.toggle-password {
+    position: absolute;
+    left: 15px;
+    top: 18px;
+    cursor: pointer;
+    color: #666;
+    z-index: 11;
+}
+
+.address-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.address-grid input:first-child { grid-column: span 2; }
+
+.form-section-title {
+    color: #d63031;
+    text-align: right;
+    margin: 25px 0 10px;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.btn-primary {
+    background: #0d4d44;
+    color: white;
+    border: none;
+    padding: 16px;
+    width: 100%;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 1.15rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+    font-family: inherit;
+}
+
+.btn-primary:disabled { background: #ccc; cursor: not-allowed; opacity: 0.7; }
+.btn-primary:hover:not(:disabled) { background: #d63031; transform: translateY(-2px); }
+
+/* ===== עיצוב מעודכן ואחיד לקישור בתחתית הדף ===== */
+.auth-footer-link { 
+    margin-top: 25px; 
+    font-size: 1rem; 
+    color: #666;
+}
+
+.auth-footer-link a { 
+    color: #0d4d44 !important; /* צבע ירוק כהה בבסיס */
+    font-weight: bold; 
+    text-decoration: none !important; /* ביטול קו תחתון דיפולטיבי */
+    transition: color 0.3s ease; /* מעבר הדרגתי וחלק */
+}
+
+/* אפקט הריחוף בירוק בהיר ורענן */
+.auth-footer-link a:hover { 
+    color: #2ebd7f !important; /* שינוי לגוון ירוק בהיר */
+    text-decoration: none !important; 
+} 

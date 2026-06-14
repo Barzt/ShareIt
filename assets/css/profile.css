@@ -1,0 +1,425 @@
+/* ===== PROFILE PAGE ===== */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0d4d44; /* רקע ירוק עמוק לפי העיצוב שלכם */
+    direction: rtl;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* מאפשר הצמדת הפוטר לתחתית */
+}
+
+/* הגנת ברזל לתמונת הפרופיל ב-Header - שלא תושפע משום הגדרה אחרת */
+header .header-profile-img {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+}
+
+/* ========== LAYOUT ========== */
+.profile-main {
+    max-width: 780px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    flex: 1; /* דוחף את הפוטר למטה במידה והתוכן קצר */
+    width: 100%;
+}
+
+/* ========== CARD ========== */
+.profile-card,
+.items-section {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+
+/* פס אדום עליון */
+.card-top-bar {
+    background: #d63031;
+    height: 7px;
+    width: 100%;
+}
+
+.card-body {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* ========== AVATAR ========== */
+.avatar-wrap {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: #0d4d44;
+    margin-bottom: 18px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+#avatar-img {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#avatar-letter {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+#pic-input { display: none; }
+
+.avatar-edit-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.avatar-edit-overlay:hover { background: rgba(0,0,0,0.6); }
+.profile-card.editing .avatar-wrap         { cursor: pointer; }
+.profile-card.editing .avatar-edit-overlay { display: flex; }
+
+/* ========== VIEW MODE ========== */
+#view-mode { width: 100%; }
+
+.profile-name {
+    color: #0d4d44;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    max-width: 440px;
+    margin: 0 auto 26px;
+    text-align: right;
+    width: 100%;
+}
+
+.detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #f4f7f6;
+    border-radius: 10px;
+    padding: 12px 15px;
+}
+
+.d-icon { font-size: 1.05rem; flex-shrink: 0; padding-top: 2px; }
+.d-content { display: flex; flex-direction: column; gap: 2px; }
+.d-label { font-size: 0.73rem; font-weight: 700; color: #0d4d44; text-transform: uppercase; letter-spacing: 0.4px; }
+.d-value { font-size: 0.93rem; color: #444; word-break: break-word; }
+
+/* ========== EDIT MODE ========== */
+#edit-mode {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+    text-align: right;
+}
+
+.fg {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 14px;
+}
+
+.fg label { font-size: 0.84rem; font-weight: 700; color: #0d4d44; }
+
+.fg input {
+    padding: 11px 14px;
+    border: 2px solid #dde3e2;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    direction: rtl;
+    background: #fafafa;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.fg input:focus {
+    border-color: #0d4d44;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(13,77,68,0.09);
+}
+
+.fg input.has-error { border-color: #d63031; background: #fff8f8; }
+
+.ferr { font-size: 0.78rem; color: #d63031; min-height: 16px; }
+
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.edit-section-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #0d4d44;
+    padding: 14px 0 10px;
+    border-top: 2px solid #f4f7f6;
+    margin-top: 2px;
+}
+
+.edit-btns { display: flex; gap: 12px; margin-top: 20px; }
+
+/* ========== BUTTONS ========== */
+.btn-green {
+    background: #0d4d44;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.15s;
+}
+.btn-green:hover  { background: #d63031; transform: translateY(-1px); }
+.btn-green:active { transform: translateY(0); }
+.btn-green:disabled { background: #b0bec5; cursor: default; transform: none; }
+
+.btn-outline {
+    background: #fff;
+    color: #666;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: #d63031; color: #d63031; }
+
+/* ========== ITEMS SECTION ========== */
+.items-section { padding: 32px 40px; }
+
+.section-title {
+    color: #0d4d44;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 13px;
+    border-bottom: 2px solid #f4f7f6;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 18px;
+}
+
+/* ========== ITEM CARD ========== */
+.item-card {
+    background: #f4f7f6;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+.item-card:hover { transform: translateY(-4px); box-shadow: 0 7px 18px rgba(0,0,0,0.12); }
+.item-card img   { width: 100%; height: 150px; object-fit: cover; display: block; }
+
+.item-card-body { padding: 13px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.item-card h3   { font-size: 0.95rem; color: #0d4d44; }
+
+.status-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; width: fit-content; }
+.status-available { background: #e8f5e9; color: #2e7d32; }
+.status-collected  { background: #fce4ec; color: #c62828; }
+
+.item-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 8px; }
+
+.btn-collect {
+    flex: 1; background: #0d4d44; color: #fff; border: none; border-radius: 8px;
+    padding: 9px 6px; font-size: 0.79rem; font-weight: 700; font-family: inherit;
+    cursor: pointer; transition: background 0.2s;
+}
+.btn-collect:hover    { background: #0a3d36; }
+.btn-collect:disabled { background: #b0bec5; cursor: default; }
+
+.btn-danger {
+    flex: 1; background: #fff; color: #d63031; border: 2px solid #d63031; border-radius: 8px;
+    padding: 9px 6px; font-size: 0.79rem; font-weight: 700; font-family: inherit;
+    cursor: pointer; transition: background 0.2s, color 0.2s;
+}
+.btn-danger:hover { background: #d63031; color: #fff; }
+
+.btn-edit-post {
+    flex: 1; background: #fff; color: #0d4d44; border: 2px solid #0d4d44; border-radius: 8px;
+    padding: 9px 6px; font-size: 0.79rem; font-weight: 700; font-family: inherit;
+    cursor: pointer; transition: background 0.2s, color 0.2s;
+}
+.btn-edit-post:hover { background: #0d4d44; color: #fff; }
+
+.empty-state { text-align: center; padding: 45px 20px; color: #aaa; grid-column: 1/-1; }
+.empty-icon  { font-size: 2.6rem; margin-bottom: 10px; }
+
+/* ========== TOAST ========== */
+#toast {
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%) translateY(70px);
+    background: #0d4d44; color: #fff;
+    padding: 12px 26px; border-radius: 30px;
+    font-weight: 600; font-size: 0.92rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    opacity: 0; transition: transform 0.3s, opacity 0.3s;
+    z-index: 9999; pointer-events: none; white-space: nowrap;
+}
+#toast.show  { transform: translateX(-50%) translateY(0); opacity: 1; }
+#toast.error { background: #d63031; }
+
+/* ========== FOOTER STYLES (התוספת החדשה) ========== */
+footer {
+    background: white;
+    color: #0d4d44;
+    padding: 40px 5%;
+    text-align: center;
+    border-top: 1px solid #eee;
+    width: 100%;
+    margin-top: auto; /* מוודא דחיפה אל תחתית הדף */
+}
+
+footer .footer-links {
+    margin-bottom: 10px;
+}
+
+footer a {
+    color: #0d4d44 !important; 
+    text-decoration: none !important; 
+    transition: color 0.3s ease;
+    margin: 0 10px; 
+    font-weight: 600;
+}
+
+footer a:hover {
+    color: #2ebd7f !important; /* משתנה לירוק בהיר רענן בריחוף עכבר */
+    text-decoration: none !important; 
+}
+
+/* ========== CUSTOM EDIT ITEM MODAL ========== */
+.custom-modal {
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 18px;
+    width: 90%;
+    max-width: 550px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    direction: rtl;
+    text-align: right;
+    animation: modalFadeIn 0.3s ease-out;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes modalFadeIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal-btn:hover {
+    color: #d63031;
+}
+
+.modal-content select,
+.modal-content textarea {
+    padding: 11px 14px;
+    border: 2px solid #dde3e2;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    direction: rtl;
+    background: #fafafa;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+.modal-content select:focus,
+.modal-content textarea:focus {
+    border-color: #0d4d44;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(13,77,68,0.09);
+}
+
+.modal-content select {
+    cursor: pointer;
+}
+
+.modal-content textarea {
+    resize: vertical;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 560px) {
+    .profile-main  { margin: 16px auto; }
+    .card-body     { padding: 26px 18px; }
+    .items-section { padding: 22px 18px; }
+    .form-row-2    { grid-template-columns: 1fr; }
+    .edit-btns     { flex-direction: column; }
+    .items-grid    { grid-template-columns: 1fr; }
+} 

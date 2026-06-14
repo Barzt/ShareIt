@@ -1,0 +1,13 @@
+/* עיצוב ברירת מחדל לנייד */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr; /* עמודה אחת בלבד */
+    gap: 15px;
+}
+
+/* התאמה למסכים רחבים יותר (מחשב) */
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 עמודות */
+    }
+}

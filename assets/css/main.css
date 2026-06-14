@@ -1,0 +1,360 @@
+/* assets/css/main.css - מבנה כללי, הדר, פוטר והתראות */
+
+:root {
+    --logo-green-dark: #0d4d44;
+    --logo-red-pure: #d63031;
+    --text-white: #ffffff;
+    --bg-light: #f4f7f6;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* איחוד הגדרות הבסיס */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    direction: rtl;
+    background-color: var(--bg-light);
+}
+
+/* Header ואלמנטים של סרגל הניווט */
+header {
+    background: white;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-link,
+.profile-link {
+    display: inline-block;
+    line-height: 0;
+}
+
+.header-logo {
+    height: 95px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.header-logo:hover {
+    transform: scale(1.03);
+}
+
+/* תפריט המשתמשים */
+#user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-logged-in,
+.user-guest {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.welcome-text {
+    color: var(--logo-green-dark);
+    font-size: 1rem;
+}
+
+#user-info .nav-link {
+    text-decoration: none;
+    color: var(--logo-green-dark);
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+#user-info .nav-link:hover {
+    color: var(--logo-red-pure);
+}
+
+/* הגנת ברזל לתמונת הפרופיל ב-Header */
+header .header-profile-img {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    vertical-align: middle !important;
+    border: 2px solid var(--logo-red-pure) !important;
+    transition: transform 0.2s ease !important;
+}
+
+header .header-profile-img:hover {
+    transform: scale(1.08) !important;
+}
+
+/* כפתור הרשמה ייחודי */
+.btn-register-outline {
+    text-decoration: none;
+    border: 2px solid var(--logo-red-pure);
+    padding: 8px 22px;
+    border-radius: 20px;
+    color: var(--logo-red-pure) !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-register-outline:hover {
+    background: var(--logo-red-pure);
+    color: white !important;
+}
+
+/* כפתור שיתוף אוכל מהיר למחוברים */
+.btn-share-food {
+    background: rgba(13, 77, 68, 0.08);
+    padding: 8px 16px;
+    border-radius: 12px;
+}
+
+/* Hero Section */
+.hero-section {
+    background-color: var(--logo-green-dark);
+    padding: 80px 5%;
+    text-align: center;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-brand-name {
+    font-size: 5.5rem;
+    font-weight: 900;
+    color: var(--logo-red-pure);
+    margin-bottom: 5px;
+    letter-spacing: -2px;
+}
+
+/* מירכוז מוחלט ואיזון מלא לסלוגן באנגלית */
+.hero-slogan {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-white);
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    direction: ltr !important;
+    text-align: center !important;
+    width: 100%;
+    padding-left: 4px;
+    /* מאזן את מרווח האות האחרונה בצורה מושלמת */
+    box-sizing: border-box;
+}
+
+.hero-content h1 {
+    font-size: 3.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--text-white);
+}
+
+.hero-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 25px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(5px);
+}
+
+#changing-text {
+    font-size: 3.2rem;
+    color: white;
+    text-shadow:
+        -2px -2px 0 var(--logo-red-pure),
+        2px -2px 0 var(--logo-red-pure),
+        -2px 2px 0 var(--logo-red-pure),
+        2px 2px 0 var(--logo-red-pure);
+    display: inline-block;
+    padding-top: 15px;
+}
+
+/* Location Bar */
+#location-bar {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+/* אזור הסטטוס וההודעות הריקות של הפיד - מירכוז מוחלט */
+#status-area {
+    width: 100%;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+/* Toast Notification */
+.toast-success {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--logo-green-dark);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    box-shadow: var(--shadow);
+    z-index: 10000;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid var(--logo-red-pure);
+    animation: slideDownFade 4s forwards;
+}
+
+@keyframes slideDownFade {
+    0% {
+        opacity: 0;
+        top: -50px;
+    }
+
+    10% {
+        opacity: 1;
+        top: 20px;
+    }
+
+    90% {
+        opacity: 1;
+        top: 20px;
+    }
+
+    100% {
+        opacity: 0;
+        top: -50px;
+    }
+}
+
+/* Footer */
+footer {
+    background: white;
+    color: var(--logo-green-dark);
+    padding: 40px 5%;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+footer a {
+    color: var(--logo-green-dark) !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    color: #2ebd7f !important;
+    text-decoration: none !important;
+}
+
+
+
+/* ========== RESPONSIVE HEADER ========== */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 15px 10px !important;
+    }
+
+    .header-logo {
+        height: 90px !important;
+        /* גודל נורמלי ובולט */
+    }
+
+    #user-info {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .user-logged-in {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+
+    .user-profile-header {
+        width: 100% !important;
+        justify-content: center !important;
+        margin-bottom: 5px !important;
+    }
+
+    .header-nav-menu {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        /* שורה אחת בלבד */
+        justify-content: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        /* מאפשר גלילה אופקית אם המסך קטן במיוחד */
+        padding: 4px 0 !important;
+    }
+
+    header #user-info .user-logged-in .nav-link {
+        margin: 0 !important;
+        font-size: 0.85rem !important;
+        /* הקטנה קלה שייכנס בשורה אחת */
+        white-space: nowrap !important;
+        /* מניעת ירידת שורה של טקסט הקישור */
+    }
+
+    header #user-info .user-logged-in .btn-share-food {
+        padding: 6px 10px !important;
+    }
+
+    .user-guest {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+}

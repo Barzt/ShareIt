@@ -1,0 +1,250 @@
+/* assets/css/my_chats.css - ShareIt My Chats Styling (WhatsApp-like layout) */
+
+.whatsapp-body-bg {
+    background-color: #f0f2f5 !important;
+    margin: 0;
+}
+
+.whatsapp-layout {
+    display: flex;
+    max-width: 1393px;
+    height: calc(100vh - 75px);
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+/* סרגל צד ימין - רשימת שיחות */
+.chats-sidebar {
+    width: 35%;
+    border-left: 1px solid #e9edef;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.sidebar-header {
+    padding: 15px;
+    background: #f0f2f5;
+    border-bottom: 1px solid #e9edef;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #111b21;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-header i {
+    color: #00a884;
+    font-size: 1.4rem;
+}
+
+.chats-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.sidebar-empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+}
+
+.sidebar-empty-state a {
+    color: #00a884;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    margin-top: 10px;
+}
+
+/* כרטיסיית שיחה (Tab) */
+.chat-tab-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f2f5;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.chat-tab-link:hover {
+    background-color: #f5f6f6;
+}
+
+.chat-tab-link.active {
+    background-color: #efeae2;
+    border-right: 4px solid #00a884;
+}
+
+.tab-avatar {
+    width: 49px;
+    height: 49px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #e9edef;
+}
+
+.tab-meta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tab-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.tab-name {
+    font-weight: 500;
+    color: #111b21;
+    font-size: 16px;
+    text-align: right;
+}
+
+.tab-status {
+    font-size: 13px;
+    color: #667781;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+}
+
+/* תגיות סטטוס בוואטסאפ */
+.badge-wa {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.bg-wa-pending {
+    background: #feefe3;
+    color: #b06000;
+}
+
+.bg-wa-approved {
+    background: #e8f0fe;
+    color: #1a73e8;
+}
+
+.bg-wa-completed {
+    background: #e6f4ea;
+    color: #137333;
+}
+
+.bg-wa-cancelled {
+    background: #fce8e6;
+    color: #c5221f;
+}
+
+/* חלון שמאל - iframe של הצ'אט הקיים */
+.chat-main-window {
+    width: 65%;
+    background: #efeae2;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.chat-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #efeae2;
+}
+
+.empty-chats-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: #667781;
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+.empty-chats-state i {
+    font-size: 4rem;
+    color: #bac0c4;
+    margin-bottom: 15px;
+}
+
+.empty-chats-state h3 {
+    margin: 0 0 8px 0;
+    color: #41525d;
+}
+
+/* ========== RESPONSIVE MOBILE WHATSAPP LAYOUT ========== */
+@media (max-width: 768px) {
+    .whatsapp-layout {
+        height: calc(100vh - 195px) !important;
+        margin: 10px auto !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    /* כברירת מחדל בנייד (ללא צ'אט פתוח), נציג רק את רשימת השיחות */
+    .whatsapp-layout:not(.show-chat-view) .chats-sidebar {
+        width: 100% !important;
+        display: flex !important;
+        border-left: none !important;
+    }
+
+    .whatsapp-layout:not(.show-chat-view) .chat-main-window {
+        display: none !important;
+    }
+
+    /* כאשר נבחר צ'אט (מצב show-chat-view), נסתיר את הרשימה ונציג את חלון הצ'אט בגודל מלא */
+    .whatsapp-layout.show-chat-view .chats-sidebar {
+        display: none !important;
+    }
+
+    .whatsapp-layout.show-chat-view .chat-main-window {
+        width: 100% !important;
+        display: flex !important;
+    }
+
+    /* בר כפתור חזרה ברשימת השיחות */
+    .mobile-back-bar {
+        display: block !important;
+        background: #f0f2f5 !important;
+        padding: 12px 15px !important;
+        border-bottom: 1px solid #e9edef !important;
+        text-align: right !important;
+    }
+
+    .btn-back-chats {
+        color: #0d4d44 !important;
+        text-decoration: none !important;
+        font-weight: bold !important;
+        font-size: 0.95rem !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+
+    .btn-back-chats:hover {
+        color: #1ebd7f !important;
+    }
+}
+
+/* הסתרת בר החזרה מהמחשב כברירת מחדל */
+.mobile-back-bar {
+    display: none;
+}

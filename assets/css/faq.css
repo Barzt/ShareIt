@@ -1,0 +1,105 @@
+/* עיצוב דף שאלות ותשובות */
+
+* {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.faq-page {
+    background-color: #f4f7f6;
+    min-height: 80vh;
+}
+
+/* Hero Section */
+.faq-hero {
+    background-color: #0d4d44;
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.faq-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+/* FAQ Container */
+.faq-section {
+    padding: 60px 0;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: white;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+    border-right: 5px solid #d63031; /* פס אדום ממותג */
+    transition: 0.3s;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 20px;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0d4d44;
+    cursor: pointer;
+    text-align: right;
+    font-family: inherit;
+}
+
+.faq-question i {
+    transition: transform 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    padding: 0 20px;
+    background: #fafafa;
+}
+
+.faq-answer p {
+    padding: 20px 0;
+    line-height: 1.6;
+    color: #555;
+    margin: 0;
+}
+
+/* מצב פעיל (פתוח) */
+.faq-item.active .faq-answer {
+    max-height: 800px; 
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.faq-item.active {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* עיצוב מיוחד לשורות ההערה המודגשות שבתוך התשובות */
+.note-line {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 5px;
+    color: #0d4d44;
+    background: #eef7f4;
+    padding: 12px 18px;
+    border-right: 4px solid #1ebd7f;
+    border-radius: 6px;
+    font-weight: bold;
+} 

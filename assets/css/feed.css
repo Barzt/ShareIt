@@ -1,0 +1,189 @@
+/* assets/css/feed.css */
+
+/* 1. מיכל הפיד הראשי - במצב ריק הוא בהיר ונמוך */
+#feed-container { 
+    padding: 40px 5%; 
+    background-color: #f4f7f6; 
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: background-color 0.4s ease, min-height 0.4s ease;
+}
+
+/* מצב פעיל שיש פוסטים - הרקע הופך לאדום מותג והגובה גדל */
+#feed-container.has-posts {
+    background-color: #d63031;
+    min-height: 540px;
+}
+
+/* 2. מבנה מעטפת הסרט הנע (הקרוסלה) */
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1150px;
+    display: flex;
+    align-items: center;
+}
+
+/* הפיכת הגריד לשורה אחת ארוכה וזורמת מימין לשמאל */
+.grid {
+    display: flex !important;
+    flex-direction: row;
+    gap: 25px; 
+    width: 100%;
+    overflow-x: hidden; /* מחביא את שאר הכרטיסיות מחוץ לגבולות המסך */
+    scroll-behavior: smooth; /* תנועת גלילה חלקה בריצה */
+    padding: 15px 5px;
+    justify-content: flex-start;
+}
+
+/* 3. כרטיסיית מוצר מותאמת לסרט נע (בדיוק 3 פוסטים בשורה) */
+.item-card {
+    background: #ffffff; 
+    border-radius: 20px;
+    overflow: hidden;
+    border: 4px solid #0d4d44; /* מסגרת ירוקה שלמה ומלאה */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    /* חישוב דינמי כדי להציג בדיוק 3 כרטיסיות במסך בו-זמנית */
+    flex: 0 0 calc(33.333% - 17px); 
+    min-width: 300px;
+    font-family: 'Segoe UI', sans-serif !important;
+}
+
+.item-img-container {
+    width: 100%;
+    height: 210px;
+    background-color: #eee;
+    overflow: hidden;
+}
+
+.item-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-card-content {
+    padding: 18px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.item-card h3 {
+    margin: 0;
+    font-size: 1.35rem;
+    color: #0d4d44; 
+    font-weight: 700;
+}
+
+/* עיצוב שורת תיאור המוצר החדשה שנמשכת מהשרת */
+.item-card .item-desc {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin: 5px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* מגביל את התיאור לעד 2 שורות כדי לשמור על גובה כרטיסיות אחיד */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 4. חצי ניווט צפים של הגלגלת */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 3px solid #0d4d44;
+    color: #0d4d44;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+
+.slider-btn:hover {
+    background: #0d4d44;
+    color: white;
+}
+
+/* מיקומי החצים בצדי הסרט הנע */
+.btn-prev { right: -22px; }
+.btn-next { left: -22px; }
+
+/* 5. כפתור "אני רוצה את זה!" - נצבע בירוק בהיר רענן בריחוף */
+.btn-primary-feed {
+    width: calc(100% - 36px);
+    margin: 0 18px 18px 18px;
+    background: #0d4d44;
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary-feed:hover { 
+    background: #1ebd7f !important; 
+    transform: scale(1.02); 
+}
+
+/* 6. הודעת "אין פריטים" במצב ריק */
+.no-results {
+    max-width: 500px;
+    font-family: 'Segoe UI', Tahoma, sans-serif !important;
+}
+
+.no-results h3 {
+    color: #0d4d44 !important; 
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.no-results p {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.no-results a {
+    color: #0d4d44;
+    text-decoration: none !important; /* ללא קו תחתון */
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.no-results a:hover {
+    color: #d63031;
+}
+
+/* ========== התאמה רספונסיבית לטלפונים ומסכים קטנים ========== */
+@media (max-width: 940px) {
+    .item-card { flex: 0 0 calc(50% - 13px); } /* מציג 2 כרטיסיות במסכים בינוניים */
+}
+@media (max-width: 620px) {
+    .item-card { flex: 0 0 100%; } /* מציג כרטיסייה בודדת אחת במסך טלפון */
+    .btn-prev { right: -10px; }
+    .btn-next { left: -10px; }
+} 

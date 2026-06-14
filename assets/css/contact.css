@@ -1,0 +1,278 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0d4d44;
+    /* רקע ירוק עמוק אחיד כמו בדף הפרופיל */
+    direction: rtl;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* הגנת מידות לתמונת הפרופיל ב-Header */
+header .header-profile-img {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+}
+
+/* ========== LAYOUT ========== */
+.contact-main {
+    flex: 1;
+    /* דוחף את הפוטר לתחתית בצורה יציבה */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    width: 100%;
+}
+
+.contact-wrapper {
+    max-width: 1000px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    /* חלוקה פרופורציונלית בין הסיידבר לטופס */
+    gap: 30px;
+}
+
+/* ========== SIDEBAR INFO ========== */
+.info-sidebar {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 40px 30px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact-header-card {
+    background: #f0f2f5;
+    border-radius: 14px;
+    padding: 15px 18px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    color: #111b21;
+    text-align: center;
+}
+
+.contact-header-card h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0d4d44;
+    margin-top: 0;
+    margin-bottom: 6px;
+}
+
+.contact-header-card p {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: #41525d;
+    margin: 0;
+}
+
+.info-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.info-icon {
+    font-size: 1.4rem;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 8px;
+    border-radius: 10px;
+    line-height: 1;
+}
+
+.info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.info-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    opacity: 0.7;
+    text-transform: uppercase;
+}
+
+.info-value {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* ========== CONTACT CARD FORM ========== */
+.contact-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+/* פס אדום עיצובי עליון */
+.card-top-bar {
+    background: #d63031;
+    height: 8px;
+    width: 100%;
+}
+
+.card-body {
+    padding: 45px;
+    text-align: right;
+}
+
+/* שדרוג: מירכוז כותרת הטופס */
+.card-body h1 {
+    color: #0d4d44;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-align: center;
+    /* ממרכז את הכותרת */
+}
+
+/* שדרוג: מירכוז תת-הכותרת ליצירת סימטריה מושלמת */
+.contact-subtitle {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    text-align: center;
+    /* ממרכז את תת-הכותרת */
+}
+
+/* אלמנטים של הטופס */
+.fg {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+    text-align: right;
+}
+
+.fg label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #0d4d44;
+}
+
+.fg input,
+.fg textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #dde3e2;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: #fafafa;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.fg input:focus,
+.fg textarea:focus {
+    border-color: #0d4d44;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(13, 77, 68, 0.08);
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* כפתור שליחה ירוק עמוק */
+.btn-submit-contact {
+    width: 100%;
+    background: #0d4d44;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+    font-family: inherit;
+}
+
+/* שדרוג: מעבר חלק לצבע ירוק בהיר רענן בריחוף במקום אדום */
+.btn-submit-contact:hover {
+    background: #1ebd7f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 189, 127, 0.3);
+    /* הילת זוהר עדינה מתאימה */
+}
+
+.btn-submit-contact:active {
+    transform: translateY(0);
+}
+
+/* ========== FOOTER STYLES ========== */
+footer {
+    background: white;
+    color: #0d4d44;
+    padding: 40px 5%;
+    text-align: center;
+    border-top: 1px solid #eee;
+    width: 100%;
+    margin-top: auto;
+}
+
+footer .footer-links {
+    margin-bottom: 10px;
+}
+
+footer a {
+    color: #0d4d44 !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease;
+    margin: 0 10px;
+    font-weight: 600;
+}
+
+footer a:hover {
+    color: #1ebd7f !important;
+    /* ירוק בהיר רענן ב-hover */
+    text-decoration: none !important;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .contact-main {
+        padding: 30px 15px;
+    }
+
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        /* מעבר למבנה טור בטלפונים */
+        gap: 20px;
+    }
+
+    .card-body {
+        padding: 30px 20px;
+    }
+
+    .form-row-2 {
+        grid-template-columns: 1fr;
+    }
+}
