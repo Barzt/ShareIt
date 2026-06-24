@@ -21,15 +21,30 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_analyze']) && isset($_FILES['item_image'])) {
     header('Content-Type: application/json');
     
-    $tmpPath = $_FILES['item_image']['tmp_name'];
+    $tmpName = $_FILES['item_image']['tmp_name'];
+    $originalName = $_FILES['item_image']['name'];
+    $extension = pathinfo($originalName, PATHINFO_EXTENSION);
     
-    // שליחת התמונה לניתוח ב-Gemini
-    $aiResults = analyzeImageWithGemini($tmpPath);
+    // יצירת נתיב זמני בתוך תיקיית ה-uploads המקומית של האתר
+    // פותר בעיות של הרשאות קריאה מתיקיית /tmp/ של השרת (open_basedir)
+    $tempTarget = '../uploads/temp_analyze_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $extension;
     
-    if ($aiResults) {
-        echo json_encode($aiResults);
+    if (move_uploaded_file($tmpName, $tempTarget)) {
+        // שליחת התמונה לניתוח ב-Gemini מתוך תיקיית האתר המורשית
+        $aiResults = analyzeImageWithGemini($tempTarget);
+        
+        // מחיקת הקובץ הזמני מיד בסיום הניתוח
+        if (file_exists($tempTarget)) {
+            unlink($tempTarget);
+        }
+        
+        if ($aiResults) {
+            echo json_encode($aiResults);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'ai_failed']);
+        }
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'ai_failed']);
+        echo json_encode(['status' => 'error', 'message' => 'temp_upload_failed']);
     }
     exit(); // עוצר כאן ולא ממשיך לשמירה ב-Database
 }
