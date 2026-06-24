@@ -35,7 +35,7 @@
     gap: 25px; 
     width: 100%;
     overflow-x: hidden; /* מחביא את שאר הכרטיסיות מחוץ לגבולות המסך */
-    scroll-behavior: smooth; /* תנועת גלילה חלקה בריצה */
+    scroll-behavior: auto; /* ביטול behavior smooth למניעת התנגשויות עם הגלגלת הרציפה ב-JS */
     padding: 15px 5px;
     justify-content: flex-start;
 }
