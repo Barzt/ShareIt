@@ -23,8 +23,21 @@ function handleNewItemUpload($user_id, $cat_id, $kosher, $allergens, $expiry, $c
     // 2. שמירת הקובץ הפיזי בשרת
     if (move_uploaded_file($file['tmp_name'], $targetPath)) {
         
-        // 3. ניתוח תמונה באמצעות AI
-        $aiResults = analyzeImageWithGemini($targetPath);
+        // 3. ניתוח תמונה באמצעות AI - בדיקה אם יש כבר תוצאות שנשלחו מהדפדפן (ממנוע ה-AJAX של הטופס)
+        $aiResults = null;
+        if (isset($_POST['ai_is_safe']) && $_POST['ai_is_safe'] !== "") {
+            // ה-AI כבר זיהה בהצלחה ברקע, נשתמש בנתונים הקיימים כדי למנוע כפל פניות לגוגל וחסימת 429
+            $aiResults = [
+                'is_food' => true,
+                'is_safe' => $_POST['ai_is_safe'] === '1' ? true : false,
+                'label' => $_POST['ai_labels'] ?? 'Food',
+                'description' => $_POST['ai_description'] ?? '',
+                'ai_feedback' => $_POST['ai_feedback'] ?? ''
+            ];
+        } else {
+            // גיבוי: אם הדפדפן לא שלח נתונים, ננסה לנתח כעת
+            $aiResults = analyzeImageWithGemini($targetPath);
+        }
         
         // --- לוגיקת בטיחות (Safety Gate) ---
         // אם ה-AI זיהה שהאוכל לא בטוח או לא אוכל, אנחנו עוצרים הכל
