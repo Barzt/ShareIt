@@ -45,6 +45,7 @@ if (!isset($_SESSION['user_id'])) {
                 <button class="pill" data-category="2">פירות וירקות 🍇</button>
                 <button class="pill" data-category="5">מאפים ומתוקים 🥐</button>
                 <button class="pill" data-category="1,3">מוצרי מדף ומקרר 🧀</button>
+                <button class="pill" data-category="6">אחר 🍽️</button>
             </div>
         </section>
 
@@ -72,6 +73,7 @@ if (!isset($_SESSION['user_id'])) {
         <p>© 2026 ShareIt - פלטפורמה קהילתית לשיתוף מזון</p>
     </footer>
 
+    <script src="../assets/js/main.js"></script>
     <script src="../assets/js/posts.js?v=<?php echo time(); ?>"></script>
 </body>
 </html> 

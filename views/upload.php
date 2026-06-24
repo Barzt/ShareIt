@@ -138,6 +138,11 @@ function formatDisplayAddress($full_address) {
                     <input type="hidden" name="item_lat" id="item_lat" value="<?php echo $_SESSION['user_lat']; ?>">
                     <input type="hidden" name="item_lng" id="item_lng" value="<?php echo $_SESSION['user_lng']; ?>">
                     <input type="hidden" name="item_address" id="item_address" value="<?php echo $_SESSION['user_address']; ?>">
+                    <!-- שדות מוסתרים לשימור תוצאות ה-AI ומניעת קריאות כפולות -->
+                    <input type="hidden" name="ai_labels" id="ai_labels" value="">
+                    <input type="hidden" name="ai_is_safe" id="ai_is_safe" value="">
+                    <input type="hidden" name="ai_feedback" id="ai_feedback" value="">
+                    <input type="hidden" name="ai_description" id="ai_description" value="">
                 </div>
 
                 <button type="submit" class="btn-publish">פרסם פריט ✨</button>
