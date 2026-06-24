@@ -47,21 +47,61 @@ if (document.getElementById('imageInput')) {
 
                 if (response.ok) {
                     const data = await response.json();
+                    console.log("AI Response Data:", data);
                     
                     // הזרקת הנתונים שה-AI חילץ ישירות לטופס
                     if (data && data.is_food) {
+                        if (data.is_safe === false) {
+                            if (labelSpan) labelSpan.innerText = "❌ שגיאה: המזון פג תוקף או לא בטוח!";
+                            alert("שומר הסף של ShareIt זיהה שהמזון אינו בטוח לפרסום:\n\n" + (data.safety_warning || "המוצר פג תוקף או אינו ראוי למאכל."));
+                            evt.target.value = ""; // מאפס את בחירת הקובץ
+                            preview.style.display = 'none';
+                            return;
+                        }
+
                         if (document.getElementById('title')) {
                             document.getElementById('title').value = data.label || "";
                         }
                         if (document.getElementById('description')) {
                             document.getElementById('description').value = data.description || "";
                         }
+                        
+                        // שמירת תוצאות ה-AI בשדות מוסתרים כדי למנוע קריאה כפולה ומכפילה לשרת
+                        if (document.getElementById('ai_labels')) document.getElementById('ai_labels').value = data.label || "Food";
+                        if (document.getElementById('ai_is_safe')) document.getElementById('ai_is_safe').value = data.is_safe ? "1" : "0";
+                        if (document.getElementById('ai_feedback')) document.getElementById('ai_feedback').value = data.ai_feedback || "";
+                        if (document.getElementById('ai_description')) document.getElementById('ai_description').value = data.description || "";
+                        
+                        // מילוי אוטומטי של שדה התאריך בטופס אם חולץ בהצלחה
+                        if (data.expiry_date && document.getElementById('expiry_date')) {
+                            let formattedDate = "";
+                            if (data.expiry_date.includes('/')) {
+                                let parts = data.expiry_date.split('/');
+                                if (parts.length === 3) {
+                                    let day = parts[0].trim().padStart(2, '0');
+                                    let month = parts[1].trim().padStart(2, '0');
+                                    let year = parts[2].trim();
+                                    if (year.length === 2) {
+                                        year = "20" + year;
+                                    }
+                                    formattedDate = `${year}-${month}-${day}`;
+                                }
+                            } else if (data.expiry_date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                                formattedDate = data.expiry_date;
+                            }
+                            if (formattedDate) {
+                                document.getElementById('expiry_date').value = formattedDate;
+                            }
+                        }
+
                         if (labelSpan) labelSpan.innerText = "✨ ה-AI זיהה את המאכל בהצלחה!";
-                    } else if (data && !data.is_food) {
+                    } else if (data && data.is_food === false) {
                         if (labelSpan) labelSpan.innerText = "❌ שגיאה: התמונה אינה מכילה מאכל תקין!";
                         alert("שומר הסף של ShareIt זיהה שהתמונה שהעלית אינה אוכל. אנא העלה תמונת מאכל תקינה.");
                         evt.target.value = ""; // מאפס את בחירת הקובץ
                         preview.style.display = 'none';
+                    } else if (data && (data.status === 'error' || data.message === 'ai_failed' || !data.hasOwnProperty('is_food'))) {
+                        if (labelSpan) labelSpan.innerText = "⚠️ שגיאת תקשורת עם ה-AI. ניתן להמשיך להעלות ידנית.";
                     }
                 }
             } catch (error) {

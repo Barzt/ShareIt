@@ -34,15 +34,37 @@ function getCleanAddressJS(rawAddress) {
 
 // --- מנגנון סרט נע פיזי, רציף ואינסופי חסין אש ---
 let animationFrameId = null;
-let isSliderHovered = false;
+let isScrolling = false;
 
 function startLiveMovieTicker() {
     const grid = document.getElementById('items-grid');
     const wrapper = document.getElementById('carousel-wrap');
     if (!grid || !wrapper) return;
 
+    // בדיקה אם הפוסטים נכנסים כולם במסך (אין גלילה)
+    // אם הכל נכנס במסך, אין צורך בגלגלת ובחצים
+    if (grid.scrollWidth <= grid.clientWidth + 5) {
+        const prevBtn = wrapper.querySelector('.slider-btn.btn-prev');
+        const nextBtn = wrapper.querySelector('.slider-btn.btn-next');
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+        
+        // עצירת האנימציה אם הייתה פעילה
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+        }
+        return;
+    } else {
+        // הצגת החצים במידה ויש גלילה
+        const prevBtn = wrapper.querySelector('.slider-btn.btn-prev');
+        const nextBtn = wrapper.querySelector('.slider-btn.btn-next');
+        if (prevBtn) prevBtn.style.display = 'flex';
+        if (nextBtn) nextBtn.style.display = 'flex';
+    }
+
     function tickerStep() {
-        if (!isSliderHovered && grid) {
+        if (!isScrolling && grid) {
             // מסיע שמאלה בצורה רציפה וחלקה בקצב קריאה נינוח ואידיאלי
             grid.scrollLeft -= 0.6; 
 
@@ -58,11 +80,87 @@ function startLiveMovieTicker() {
     // איפוס אנימציות קודמות למניעת כפילויות מהירות
     if (animationFrameId) cancelAnimationFrame(animationFrameId);
     animationFrameId = requestAnimationFrame(tickerStep);
-
-    // מאזיני הגנה: עצירת הסרט הנע בעת ריחוף עכבר לקריאה נוחה, והמשך תנועה ביציאה
-    wrapper.onmouseenter = () => { isSliderHovered = true; };
-    wrapper.onmouseleave = () => { isSliderHovered = false; };
 }
+
+// מימוש פונקציית החצים בצדדים
+function scrollSlider(direction) {
+    const grid = document.getElementById('items-grid');
+    if (!grid || isScrolling) return;
+
+    isScrolling = true;
+    
+    // הפעלת smooth זמנית רק לצורך לחיצת החץ
+    grid.style.scrollBehavior = 'smooth';
+    
+    // חישוב רוחב של כרטיסייה אחת + המרווח (gap)
+    const card = grid.querySelector('.item-card');
+    const scrollAmount = card ? card.offsetWidth + 25 : 340; 
+    
+    if (direction === 'prev') {
+        grid.scrollLeft += scrollAmount;
+    } else {
+        grid.scrollLeft -= scrollAmount;
+    }
+    
+    // המתנה לסיום האנימציה החלקה של הדפדפן ואז החזרת המצב ל-auto
+    setTimeout(() => {
+        grid.style.scrollBehavior = 'auto';
+        
+        const halfScrollWidth = grid.scrollWidth / 2;
+        if (Math.abs(grid.scrollLeft) >= halfScrollWidth) {
+            grid.scrollLeft = 0;
+        } else if (grid.scrollLeft > 0) {
+            // התאמה ל-RTL למקרה שהמשתמש גלל ימינה מדי
+            grid.scrollLeft = -halfScrollWidth;
+        }
+        
+        isScrolling = false;
+    }, 500);
+}
+
+// חשיפת הפונקציה ל-window כדי שה-HTML inline onclick יוכל להכיר אותה
+window.scrollSlider = scrollSlider;
+
+// שדרוג אבטחתי: פונקציה לטיפול בלחיצה על "מתאים לי בול!" ומעבר ישיר לצ'אט לתיאום
+async function handleAdoptClick(btn, itemId) {
+    if (btn.disabled) return;
+    
+    const originalText = btn.innerText;
+    btn.disabled = true;
+    btn.innerText = "פותח שיחת תיאום... 💬";
+
+    try {
+        // קריאה לשרת כדי ליצור בקשה ולנעול את הפוסט ל-pending
+        const response = await fetch('../api/create_checkout.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ item_id: itemId })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.request_id) {
+            // מעבר ישיר לעמוד הצ'אט עם ה-request_id החדש שנפתח!
+            window.location.href = `chat.php?request_id=${data.request_id}`;
+        } else {
+            alert(data.message || "אופס! נראה שהפריט הזה כבר לא זמין כרגע.");
+            if (typeof fetchAllPosts === 'function') {
+                fetchAllPosts();
+            } else if (typeof fetchFeed === 'function') {
+                fetchFeed();
+            }
+        }
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("חלה שגיאה בתקשורת מול השרת.");
+        btn.disabled = false;
+        btn.innerText = originalText;
+    }
+}
+
+// חשיפת הפונקציה ל-window כדי ששני הדפים יוכלו להשתמש בה
+window.handleAdoptClick = handleAdoptClick;
 
 async function fetchFeed() {
     const grid = document.getElementById('items-grid');
@@ -122,7 +220,7 @@ async function fetchFeed() {
                         📍 במרחק ${parseFloat(item.distance || 0).toFixed(1)} ק"מ
                     </p>
                 </div>
-                <button class="btn-primary-feed" onclick="window.location.href='chat.php?item_id=${item.item_id || item.id}'">
+                <button class="btn-primary-feed" onclick="window.handleAdoptClick(this, ${item.item_id || item.id})">
                     מתאים לי בול! 😋
                 </button>
             `;

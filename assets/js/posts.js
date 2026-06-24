@@ -46,38 +46,7 @@ window.closeImageModal = function() {
 };
 
 // --- שדרוג אבטחתי: פונקציה לטיפול בלחיצה על "מתאים לי בול!" ומעבר ישיר לצ'אט לתיאום ---
-window.handleAdoptClick = async function(btn, itemId) {
-    if (btn.disabled) return;
-    
-    const originalText = btn.innerText;
-    btn.disabled = true;
-    btn.innerText = "פותח שיחת תיאום... 💬";
-
-    try {
-        // קריאה לשרת כדי ליצור בקשה ולנעול את הפוסט ל-pending
-        const response = await fetch('../api/create_checkout.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ item_id: itemId })
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.request_id) {
-            // מעבר ישיר לעמוד הצ'אט עם ה-request_id החדש שנפתח!
-            window.location.href = `chat.php?request_id=${data.request_id}`;
-        } else {
-            alert(data.message || "אופס! נראה שהפריט הזה כבר לא זמין כרגע.");
-            fetchAllPosts();
-        }
-
-    } catch (error) {
-        console.error("Error:", error);
-        alert("חלה שגיאה בתקשורת מול השרת.");
-        btn.disabled = false;
-        btn.innerText = originalText;
-    }
-}; // <-- הסוגר התיקוני שהיה חסר וגרם לקריסה!
+// window.handleAdoptClick הועבר לקובץ המרכזי main.js כדי למנוע כפילות קוד ולהנגיש אותו לשני העמודים.
 
 // עיבוד וסינון נתונים בזמן אמת והזרקתם לגריד
 function filterAndRenderItems() {
